@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import AppAuth from './AppAuth';
+import AppSecond from './AppSecond';
 import reportWebVitals from './reportWebVitals';
 
 import Amplify from 'aws-amplify';
 import config from './aws-exports';
 
-Amplify.configure(config);
+const user = Amplify.configure(config);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AppAuth />
+    <AppSecond user={user}/>
   </React.StrictMode>
 );
 
