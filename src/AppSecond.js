@@ -2,6 +2,7 @@ import './App.css';
 import React, { Component } from 'react';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 import * as AmazonCognitoIdentity from "amazon-cognito-identity-js";
+import Amplify, {Auth} from 'aws-amplify';
 
 class AppSecond extends Component {
   constructor(props) {
@@ -29,7 +30,17 @@ class AppSecond extends Component {
     }));
   }
 
-  onSearch() {
+  getuser() {
+    const init = async() => {
+      const currentUser = await Auth.currentAuthenticatedUser();
+      this.setState(state => ({
+        userName: currentUser,
+      }));
+    };
+    init();
+  }
+
+  async onSearch() {
     const key = this.state.searchKeyWord;
     const user = this.state.user;
     alert(key);
@@ -42,7 +53,9 @@ class AppSecond extends Component {
 
     const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-    const idToken = userPool.storage["CognitoIdentityServiceProvider.1v05drvqifbhol57ls7qrvc3o8.sample2.idToken"];
+    const currentUser = await Auth.currentAuthenticatedUser();
+
+    const idToken = userPool.storage["CognitoIdentityServiceProvider." + poolData.ClientId + "." + currentUser.username + ".idToken"];
 
     this.setState(state => ({
       searchName: "",

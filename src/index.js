@@ -4,10 +4,10 @@ import './index.css';
 import AppSecond from './AppSecond';
 import reportWebVitals from './reportWebVitals';
 
-import Amplify from 'aws-amplify';
+import AmplifyCore from '@aws-amplify/core';
 import config from './aws-exports';
 
-const user = Amplify.configure(config);
+const user = AmplifyCore.configure(config);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
